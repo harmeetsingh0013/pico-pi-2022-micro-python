@@ -14,6 +14,8 @@ myToggleButton = Pin(toggleButtonPin, Pin.IN, Pin.PULL_UP)
 toggleButtonStateOld = 1
 toggleButtonStateNow = 1
 
+print("Current Temprature")
+
 tempUnitC = True
 
 while True:
@@ -25,6 +27,7 @@ while True:
                 sensor.measure()
             except:
                 passb 
+            sensor.measure()
             tempC = sensor.temperature()
             hum = sensor.humidity()
             
