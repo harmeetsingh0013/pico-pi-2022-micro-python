@@ -1,6 +1,7 @@
 from machine import Pin
 import utime as time
 from dht import DHT11
+from lcd1602 import LCD
 
 dataPin = 16
 
@@ -14,7 +15,7 @@ myToggleButton = Pin(toggleButtonPin, Pin.IN, Pin.PULL_UP)
 toggleButtonStateOld = 1
 toggleButtonStateNow = 1
 
-print("Current Temprature")
+lcd = LCD()
 
 tempUnitC = True
 
@@ -26,17 +27,21 @@ while True:
             try:
                 sensor.measure()
             except:
-                passb 
-            sensor.measure()
+                pass
+
             tempC = sensor.temperature()
             hum = sensor.humidity()
             
             if tempUnitC == True:
                 print("\r", 'Temp = ', tempC, chr(176) + 'C', 'Humidity = ', hum, '%', end = '')
+                lcd.write(0,0, 'Temp: ' + str(tempC) + '\xDF'+ 'C      ')
+                
             if tempUnitC == False:
                 tempFr = (tempC * 9/5) + 32
                 print("\r", 'Temp = ', tempFr, chr(176) + 'F', 'Humidity = ', hum, '%', end = '')
-                 
+                lcd.write(0,0, 'Temp: ' + str(tempFr) + '\xDF'+ 'F')
+                
+            lcd.write(0,1, 'Humidity: ' + str(hum) + '%       ')   
             tempUnitC = not tempUnitC
             
         toggleButtonStateOld = toggleButtonStateNow
